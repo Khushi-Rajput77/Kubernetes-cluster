@@ -1,0 +1,23 @@
+# Private keys and credentials
+*.pem
+vm-key
+vm-key.pub
+id_rsa
+id_ed25519
+.env
+.env.*
+
+# Kubernetes credentials
+.kube/
+kubeconfig
+admin.conf
+
+# Local backup files
+ubuntu-vm-old-backup.yaml
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor files
+.vscode/
