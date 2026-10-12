@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: static-pv-block
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: static-local
+  volumeMode: Block
+  local:
+    path: /dev/loop6
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values: [ip-172-31-14-250]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: static-pvc-block
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: static-local
+  volumeMode: Block
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-block-writer
+spec:
+  containers:
+  - name: app
+    image: busybox
+    command: ["sh","-c","echo 'raw block test' | dd of=/dev/xvda bs=512 conv=sync 2>/dev/null; sleep 3600"]
+    volumeDevices:
+    - name: blk
+      devicePath: /dev/xvda
+  volumes:
+  - name: blk
+    persistentVolumeClaim:
+      claimName: static-pvc-block
+
