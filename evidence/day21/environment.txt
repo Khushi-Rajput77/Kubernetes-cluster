@@ -1,0 +1,9 @@
+Sun Oct 18 18:21:22 UTC 2026
+Description:	Ubuntu 24.04.5 LTS
+7.0.0-1013-aws
+Client Version: v1.37.1
+Kustomize Version: v5.8.1
+Server Version: v1.37.1
+containerd github.com/containerd/containerd/v2 2.2.1 
+v4.3.0+gbec5b06
+
