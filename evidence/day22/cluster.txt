@@ -1,0 +1,43 @@
+NAME               STATUS   ROLES           AGE   VERSION    INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
+ip-172-31-1-126    Ready    <none>          11m   v1.33.13   172.31.1.126    <none>        Ubuntu 24.04.5 LTS   6.17.0-1019-aws   containerd://2.2.1
+ip-172-31-14-149   Ready    <none>          11m   v1.33.13   172.31.14.149   <none>        Ubuntu 24.04.5 LTS   6.17.0-1019-aws   containerd://2.2.1
+ip-172-31-14-250   Ready    control-plane   18h   v1.33.13   172.31.14.250   <none>        Ubuntu 24.04.5 LTS   7.0.0-1013-aws    containerd://2.2.1
+NAMESPACE     NAME                                       READY   STATUS    RESTARTS        AGE     IP               NODE               NOMINATED NODE   READINESS GATES
+cdi           cdi-apiserver-5dd6668475-kdwd9             1/1     Running   1 (2m21s ago)   3m3s    192.168.57.133   ip-172-31-14-149   <none>           <none>
+cdi           cdi-deployment-85b4b6c649-7hjqw            1/1     Running   0               3m3s    192.168.211.4    ip-172-31-1-126    <none>           <none>
+cdi           cdi-operator-7cfb547d46-b6pc8              1/1     Running   0               3m14s   192.168.211.3    ip-172-31-1-126    <none>           <none>
+cdi           cdi-uploadproxy-5d46fbc5b7-x2npd           1/1     Running   0               3m3s    192.168.57.132   ip-172-31-14-149   <none>           <none>
+kube-system   calico-kube-controllers-9b54b4c6c-nsccx    1/1     Running   1 (176m ago)    18h     192.168.224.4    ip-172-31-14-250   <none>           <none>
+kube-system   calico-node-chms5                          1/1     Running   1 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kube-system   calico-node-lk9st                          1/1     Running   0               11m     172.31.14.149    ip-172-31-14-149   <none>           <none>
+kube-system   calico-node-tb6dp                          1/1     Running   0               11m     172.31.1.126     ip-172-31-1-126    <none>           <none>
+kube-system   coredns-674b8bbfcf-6h6c7                   1/1     Running   1 (176m ago)    18h     192.168.224.5    ip-172-31-14-250   <none>           <none>
+kube-system   coredns-674b8bbfcf-bjxxl                   1/1     Running   1 (176m ago)    18h     192.168.224.6    ip-172-31-14-250   <none>           <none>
+kube-system   etcd-ip-172-31-14-250                      1/1     Running   2 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kube-system   kube-apiserver-ip-172-31-14-250            1/1     Running   2 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kube-system   kube-controller-manager-ip-172-31-14-250   1/1     Running   2 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kube-system   kube-proxy-htrxx                           1/1     Running   1 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kube-system   kube-proxy-pf5r7                           1/1     Running   0               11m     172.31.14.149    ip-172-31-14-149   <none>           <none>
+kube-system   kube-proxy-zt484                           1/1     Running   0               11m     172.31.1.126     ip-172-31-1-126    <none>           <none>
+kube-system   kube-scheduler-ip-172-31-14-250            1/1     Running   2 (176m ago)    18h     172.31.14.250    ip-172-31-14-250   <none>           <none>
+kubevirt      virt-api-5bcdf88c88-s2hzm                  1/1     Running   1 (2m59s ago)   6m27s   192.168.224.12   ip-172-31-14-250   <none>           <none>
+kubevirt      virt-api-5bcdf88c88-zgjh6                  1/1     Running   1 (2m59s ago)   6m27s   192.168.224.11   ip-172-31-14-250   <none>           <none>
+kubevirt      virt-controller-695948cb54-2cmp8           1/1     Running   1 (3m4s ago)    5m45s   192.168.224.13   ip-172-31-14-250   <none>           <none>
+kubevirt      virt-controller-695948cb54-rdzgp           1/1     Running   1 (3m4s ago)    5m45s   192.168.224.15   ip-172-31-14-250   <none>           <none>
+kubevirt      virt-handler-975vv                         1/1     Running   0               5m45s   192.168.224.14   ip-172-31-14-250   <none>           <none>
+kubevirt      virt-handler-bcrbk                         1/1     Running   0               5m45s   192.168.211.2    ip-172-31-1-126    <none>           <none>
+kubevirt      virt-handler-lzl28                         1/1     Running   0               5m45s   192.168.57.131   ip-172-31-14-149   <none>           <none>
+kubevirt      virt-operator-7ffcc976cd-nj5z5             1/1     Running   0               7m24s   192.168.224.9    ip-172-31-14-250   <none>           <none>
+kubevirt      virt-operator-7ffcc976cd-th956             1/1     Running   0               7m24s   192.168.224.8    ip-172-31-14-250   <none>           <none>
+Name:               ip-172-31-1-126
+  MemoryPressure       False   Mon, 19 Oct 2026 12:56:31 +0000   Mon, 19 Oct 2026 12:46:27 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  cpu                            460m (11%)  0 (0%)
+  memory                         625Mi (4%)  0 (0%)
+Name:               ip-172-31-14-149
+  MemoryPressure       False   Mon, 19 Oct 2026 12:55:39 +0000   Mon, 19 Oct 2026 12:46:39 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  cpu                            460m (11%)  0 (0%)
+  memory                         625Mi (4%)  0 (0%)
+Name:               ip-172-31-14-250
+  MemoryPressure       False   Mon, 19 Oct 2026 12:53:34 +0000   Sun, 18 Oct 2026 18:45:16 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  cpu                            1160m (28%)   0 (0%)
+  memory                         3015Mi (22%)  340Mi (2%)

@@ -56,3 +56,4 @@ Open risks: RWX/live migration, K8s version support, quota
 - CNI: Calico v3.31.3, pod CIDR 192.168.0.0/16
 - Nodes: 3 x m7i.xlarge in ap-south-1b, quota 16 vCPU
 - Node 1: control plane + Mayastor; VMs planned on Nodes 2 and 3
+- Kernels: Node 1 = 7.0.0-1013-aws; Nodes 2 and 3 = 6.17.0-1019-aws (apt upgrade kept the linux-aws package on 6.17, full-upgrade would move to 7.0). Mayastor smoke test on Day 23 decides if this needs aligning.
