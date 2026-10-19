@@ -47,3 +47,12 @@ Open risks: RWX/live migration, K8s version support, quota
 - Mayastor RWX block support for live migration is experimental.
 - Three nodes require careful CPU, RAM, and storage planning.
 - AWS spending must remain within the $200 credit limit.
+
+## Day 21 decisions
+- Rebuilt on Kubernetes v1.33.13 to match the OpenEBS KubeVirt migration example (validated on v1.33.12)
+- OS: Ubuntu 24.04.5 LTS, kernel 7.0.0-1013-aws (newer than Mayastor's tested 5.15, unverified)
+- containerd 2.2.1 with SystemdCgroup=true and device_ownership_from_security_context=true
+- Hugepages: 1024 x 2 MiB, persistent via sysctl; nvme_tcp persistent via modules-load.d
+- CNI: Calico v3.31.3, pod CIDR 192.168.0.0/16
+- Nodes: 3 x m7i.xlarge in ap-south-1b, quota 16 vCPU
+- Node 1: control plane + Mayastor; VMs planned on Nodes 2 and 3
