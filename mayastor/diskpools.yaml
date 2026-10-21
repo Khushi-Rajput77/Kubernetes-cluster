@@ -1,0 +1,26 @@
+apiVersion: "openebs.io/v1beta3"
+kind: DiskPool
+metadata:
+  name: pool-node-1
+  namespace: openebs
+spec:
+  node: ip-172-31-14-250
+  disks: ["aio:///dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol06f6116d9a7373239"]
+---
+apiVersion: "openebs.io/v1beta3"
+kind: DiskPool
+metadata:
+  name: pool-node-2
+  namespace: openebs
+spec:
+  node: ip-172-31-1-126
+  disks: ["aio:///dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol0af60105b85566336"]
+---
+apiVersion: "openebs.io/v1beta3"
+kind: DiskPool
+metadata:
+  name: pool-node-3
+  namespace: openebs
+spec:
+  node: ip-172-31-14-149
+  disks: ["aio:///dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol030833de524f02989"]
