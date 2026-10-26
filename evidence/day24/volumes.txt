@@ -1,0 +1,15 @@
+NAME                     PROVISIONER               RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+mayastor-1               io.openebs.csi-mayastor   Delete          Immediate              true                   2m46s
+mayastor-2               io.openebs.csi-mayastor   Delete          Immediate              true                   2m46s
+mayastor-3               io.openebs.csi-mayastor   Delete          Immediate              true                   2m46s
+mayastor-etcd-localpv    openebs.io/local          Delete          WaitForFirstConsumer   false                  5d10h
+openebs-hostpath         openebs.io/local          Delete          WaitForFirstConsumer   false                  5d10h
+openebs-loki-localpv     openebs.io/local          Delete          WaitForFirstConsumer   false                  5d9h
+openebs-minio-localpv    openebs.io/local          Delete          WaitForFirstConsumer   false                  5d9h
+openebs-single-replica   io.openebs.csi-mayastor   Delete          Immediate              true                   5d10h
+NAME   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+vol3   Bound    pvc-6ea9d382-ae1a-41a6-acce-8aede1acbf7e   2Gi        RWO            mayastor-3     <unset>                 2m18s
+NAME          NODE               STATE     STATUS   ERROR   ALERTS    ENCRYPTED   CAPACITY   USED      AVAILABLE   DISK-CAPACITY   MAX-EXPANDABLE-SIZE
+pool-node-1   ip-172-31-14-250   Created   Online           Healthy   false       20 GiB     616 MiB   19.4 GiB    20 GiB          127.8 GiB
+pool-node-2   ip-172-31-1-126    Created   Online           Healthy   false       20 GiB     616 MiB   19.4 GiB    20 GiB          127.8 GiB
+pool-node-3   ip-172-31-14-149   Created   Online           Healthy   false       20 GiB     616 MiB   19.4 GiB    20 GiB          127.8 GiB
