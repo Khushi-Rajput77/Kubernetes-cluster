@@ -1,0 +1,57 @@
+KubeVirt + OpenEBS Mayastor RWX Block Live Migration
+Date: 9 November 2026
+
+Environment:
+- AWS region: ap-south-1
+- Kubernetes: v1.33.13
+- KubeVirt: v1.8.3
+- OpenEBS: 4.5.0
+- CDI: v1.65.0
+- EC2 nodes: 3
+- VM worker nodes: 2
+
+StorageClass:
+- Name: mayastor-rwx-block
+- Protocol: nvmf
+- Replicas: 2
+- RWX Block: enabled
+- Thin provisioning: enabled
+
+DataVolume:
+- Name: ubuntu-rwx-block
+- Capacity: 8Gi
+- Access mode: ReadWriteMany
+- Volume mode: Block
+- Import status: Succeeded
+
+PVC:
+- Name: ubuntu-rwx-block
+- Status: Bound
+- Access mode: RWX
+
+Virtual Machine:
+- Name: vm-rwx
+- CPU: 1 core
+- Memory: 1024 MiB
+- Initial node: ip-172-31-1-126
+- Initial phase: Running
+- Live-migratable: True
+
+Live Migration:
+- Command: virtctl migrate vm-rwx
+- Migration record: kubevirt-migrate-vm-sc9cp
+- Migration phase: Succeeded
+- Migration completed: true
+- Destination node: ip-172-31-14-149
+- Final VM phase: Running
+- Final VM readiness: True
+
+Known limitation:
+OpenEBS documentation lists three worker nodes for its
+migration testing prerequisite. This lab has two VM workers.
+Migration between these two workers succeeded.
+
+etcd limitation:
+openebs-etcd-1 remains Pending because of insufficient CPU
+and PV node affinity. The other two etcd members are Running.
+Avoid stopping or restarting cluster nodes.

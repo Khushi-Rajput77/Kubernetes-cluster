@@ -1,0 +1,16 @@
+== pod events
+  Type     Reason              Age                      From                     Message
+  ----     ------              ----                     ----                     -------
+  Normal   Scheduled           5h31m                    default-scheduler        Successfully assigned default/hb-app-5fbfc96986-wsqqk to ip-172-31-1-126
+  Warning  FailedAttachVolume  5h31m                    attachdetach-controller  Multi-Attach error for volume "pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1" Volume is already used by pod(s) hb-app-5fbfc96986-khphx
+  Warning  FailedAttachVolume  4h39m (x349 over 4h51m)  attachdetach-controller  AttachVolume.Attach failed for volume "pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1" : rpc error: code = Internal desc = Volume 3a8c1229-41d3-47e6-a4c9-b95b7286bfb1 reports no info about its publishing status
+  Warning  FailedAttachVolume  7m15s (x10 over 11m)     attachdetach-controller  AttachVolume.Attach failed for volume "pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1" : rpc error: code = Internal desc = Volume 3a8c1229-41d3-47e6-a4c9-b95b7286bfb1 reports no info about its publishing status
+== attachment status
+NAME                                                                   ATTACHER                  PV                                         NODE              ATTACHED   AGE
+csi-804acbc0ff8967c2b8f5be52ef8645b60c87b4bca4df04ba4e6267d52a3bac89   io.openebs.csi-mayastor   pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1   ip-172-31-1-126   false      4h51m
+== agent-core log
+Error from server: Get "https://172.31.1.126:10250/containerLogs/openebs/openebs-agent-core-7bb979bd94-qb9kh/agent-core?tailLines=40": dial tcp 172.31.1.126:10250: connect: no route to host
+== etcd pods
+openebs-etcd-0                                 0/1     Pending       0               4h44m   <none>           <none>             <none>           <none>
+openebs-etcd-1                                 0/1     Pending       0               6h40m   <none>           <none>             <none>           <none>
+openebs-etcd-2                                 0/1     Terminating   0               6h35m   192.168.211.51   ip-172-31-1-126    <none>           <none>

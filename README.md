@@ -2,97 +2,140 @@
 
 ## Project Overview
 
-This project explores how to run virtual machines inside Kubernetes
-and how persistent storage can be used for VM data.
+This project explores running virtual machines inside Kubernetes and providing persistent, replicated storage using OpenEBS Mayastor.
 
-The lab is being built on AWS using EC2, Kubernetes, KubeVirt and,
-in a later phase, OpenEBS Mayastor.
+The lab is deployed on AWS EC2 using Kubernetes, KubeVirt, QEMU/KVM, CDI and OpenEBS Mayastor.
+
+The project focuses on VM deployment, persistent block storage, storage replication, volume expansion, failure testing and live migration between Kubernetes worker nodes.
 
 ## Project Goals
 
-- Set up an AWS EC2 environment.
-- Install and understand Kubernetes.
-- Run an Ubuntu virtual machine using KubeVirt.
+- Set up a three-node AWS EC2 environment.
+- Install and configure Kubernetes.
+- Run Ubuntu virtual machines using KubeVirt.
 - Understand QEMU, KVM and nested virtualization.
-- Learn cloud-init for automatic VM configuration.
-- Understand container disks, DataVolumes, PVs and PVCs.
-- Explore persistent storage and Mayastor replication.
-- Test VM recovery and live migration.
+- Use CDI and DataVolumes to import VM images.
+- Understand Persistent Volumes and Persistent Volume Claims.
+- Configure replicated block storage using OpenEBS Mayastor.
+- Test volume expansion and replica-loss scenarios.
+- Configure experimental RWX Block storage for KubeVirt.
+- Perform live migration between worker nodes.
 - Document commands, configurations and results.
 
-## Planned Architecture
+## Architecture
 
-AWS ap-south-1 (Mumbai)
-|
-|-- EC2 Node 1
-|-- EC2 Node 2
-|-- EC2 Node 3
-     |
-     Kubernetes
-     |
-     |-- KubeVirt: runs virtual machines
-     |
-     |-- OpenEBS Mayastor: planned replicated storage
+**AWS Region:** ap-south-1 (Mumbai)
 
-The three-node architecture is the target design.
-The cluster currently began as a single-node setup.
+**EC2 instances:** 3 × m7i.xlarge
+
+| Node | Private IP | Role |
+|---|---|---|
+| Node 1 | 172.31.14.250 | Kubernetes control plane |
+| Node 2 | 172.31.1.126 | Worker |
+| Node 3 | 172.31.14.149 | Worker |
+
+Kubernetes manages the cluster workloads.
+
+KubeVirt runs virtual machines as Kubernetes workloads.
+
+OpenEBS Mayastor provides replicated block storage across the cluster.
 
 ## Technologies
 
 - AWS EC2
-- Ubuntu Linux
-- Kubernetes
+- Ubuntu Linux 24.04
+- Kubernetes v1.33.13
 - kubeadm
 - kubectl
 - containerd
 - Calico
-- KubeVirt
+- KubeVirt v1.8.3
 - QEMU/KVM
-- CDI and DataVolumes
+- CDI v1.65.0
+- OpenEBS Mayastor 4.5.0
 - Persistent Volumes and Persistent Volume Claims
-- OpenEBS Mayastor (planned)
+- NVMe-oF
 - Git and GitHub
 
 ## Important Concepts
 
 ### EC2
-Provides the cloud server where the Kubernetes node runs.
+Provides the cloud servers where Kubernetes nodes run.
 
 ### Kubernetes
-Manages containers, Pods, networking and workloads.
+Manages containers, Pods, networking and workloads across the cluster.
 
 ### KubeVirt
-Allows virtual machines to run inside Kubernetes.
+Allows virtual machines to run and be managed inside Kubernetes.
 
 ### QEMU/KVM
-Provides the virtualization technology used to run the guest VM.
+Provides the virtualization technology used to run guest virtual machines.
 
-### Cloud-init
-Automatically configures a VM during its first boot.
+### CDI and DataVolumes
+CDI imports VM disk images and creates DataVolumes backed by persistent storage.
 
 ### Persistent Storage
-Keeps VM data separately from the VM configuration so the data
-can survive VM replacement, depending on the storage configuration.
+Stores VM disk data independently of the VM configuration.
 
-### Mayastor
-Planned storage layer for replicated block storage and recovery tests.
+### OpenEBS Mayastor
+Provides replicated block storage using storage pools and replicas distributed across nodes.
 
-## Progress
+### RWX Block Storage
+Allows a block volume to be accessed with ReadWriteMany semantics. In this lab, it is used for KubeVirt live migration.
 
-See `docs/progress-days-1-17.md` for the learning log.
+## Completed Work
 
-See `docs/day-17.md` for the Day 17 checklist and results.
+### Kubernetes and KubeVirt
+- Configured a three-node Kubernetes cluster.
+- Installed KubeVirt and CDI.
+- Configured worker nodes for VM workloads.
+- Successfully deployed virtual machines.
+
+### Mayastor Storage
+- Configured three Mayastor DiskPools.
+- Created a three-replica Mayastor volume.
+- Verified volume availability and replica distribution.
+- Tested data movement between nodes.
+- Tested online volume expansion.
+- Performed a replica-loss test.
+
+### KubeVirt Live Migration with RWX Block
+- Created a separate `mayastor-rwx-block` StorageClass.
+- Configured two replicas using NVMe-oF.
+- Created an 8 GiB Ubuntu DataVolume.
+- Verified the RWX PVC reached Bound status.
+- Created a KubeVirt VM using the RWX Block volume.
+- Verified the VM was live-migratable.
+- Successfully migrated the VM from Node 2 to Node 3.
+- Verified the VM remained Running after migration.
+- Verified `migrationState.completed: true`.
+- Verified the KubeVirt migration record reached Succeeded.
+
+## Known Limitations
+
+- The OpenEBS RWX Block live migration feature is experimental and should not be considered production-ready.
+- OpenEBS documentation lists three worker nodes for its migration testing prerequisite. This lab has two VM worker nodes, and migration between those two workers succeeded.
+- One OpenEBS etcd member remains Pending because of insufficient CPU and persistent-volume node affinity. The other two members are Running.
+- Avoid stopping or restarting cluster nodes because the etcd cluster currently has no remaining failure tolerance.
+
+## Evidence and Documentation
+
+- `docs/` contains project documentation and progress records.
+- `evidence/` contains test results and troubleshooting records.
+- `evidence/day26-28/rwx-live-migration.txt` documents the successful RWX Block live migration test.
 
 ## Cost and Security Notes
 
-- Check AWS billing and resource usage regularly.
-- Stop EC2 instances when the lab is not in use.
-- EBS volumes and other resources may still incur charges when
-  an EC2 instance is stopped.
-- Never commit private SSH keys, AWS credentials or private keys.
+- Monitor AWS billing and resource usage regularly.
+- Stop EC2 instances only when it is safe for the cluster.
+- Remember that EBS volumes and other resources may continue to incur charges when EC2 instances are stopped.
+- Never commit SSH private keys, AWS credentials or other secrets.
 - Review configuration files before pushing them to GitHub.
 
 ## Project Status
 
-In progress. The planned three-node Mayastor architecture and
-all recovery tests must be verified before they can be marked complete.
+The three-node Kubernetes and Mayastor lab is operational.
+
+Three-replica storage, volume expansion, replica-loss testing and KubeVirt live migration using experimental RWX Block storage have been demonstrated.
+
+Further work includes improving etcd resource availability, documenting additional recovery scenarios and completing the final project report.

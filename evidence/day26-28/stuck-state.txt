@@ -1,0 +1,18 @@
+== stuck pod events
+Node-Selectors:              workload=vm
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason              Age   From                     Message
+  ----     ------              ----  ----                     -------
+  Normal   Scheduled           30m   default-scheduler        Successfully assigned default/hb-app-5fbfc96986-wsqqk to ip-172-31-1-126
+  Warning  FailedAttachVolume  30m   attachdetach-controller  Multi-Attach error for volume "pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1" Volume is already used by pod(s) hb-app-5fbfc96986-khphx
+== volumeattachments
+NAME                                                                   ATTACHER                  PV                                         NODE               ATTACHED   AGE
+csi-fe68ea84cd1444778f0c93fb55cae026d81a23a0b7862f5c896600198af3d624   io.openebs.csi-mayastor   pvc-3a8c1229-41d3-47e6-a4c9-b95b7286bfb1   ip-172-31-14-149   true       39m
+== mayastor
+volume 3a8c1229-41d3-47e6-a4c9-b95b7286bfb1 | replicas wanted: 3 | status: Degraded
+   replica 3ccf8c59 | node: ip-172-31-14-250 | pool: pool-node-1 | state: Online
+   replica 6d58fd35 | node: ip-172-31-1-126 | pool: pool-node-2 | state: Online
+   replica 0c6f50e4 | node: ip-172-31-14-149 | pool: pool-node-3 | state: Unknown
+   target node: None
