@@ -139,3 +139,25 @@ The three-node Kubernetes and Mayastor lab is operational.
 Three-replica storage, volume expansion, replica-loss testing and KubeVirt live migration using experimental RWX Block storage have been demonstrated.
 
 Further work includes improving etcd resource availability, documenting additional recovery scenarios and completing the final project report.
+
+
+## Final Verification — 9 November 2026
+
+The final cluster health check confirmed:
+
+- All three Kubernetes nodes were `Ready` on Kubernetes v1.33.13.
+- The `vm-rwx` virtual machine was Running and Ready on worker Node 3 (`ip-172-31-14-149`).
+- The 8 GiB `ubuntu-rwx-block` PVC was Bound with RWX access and Block volume mode.
+- The live-migration record `kubevirt-migrate-vm-sc9cp` was Succeeded, and `migrationState.completed` was true.
+- All three Mayastor DiskPools were Online and Healthy, with 20 GiB configured capacity each (60 GiB total).
+- Mayastor IO engines, NATS, CSI components and the API components were Running.
+
+### Remaining health caveat
+
+`openebs-etcd-1` remained Pending because the scheduler reported insufficient CPU and persistent-volume node-affinity constraints. `openebs-etcd-0` and `openebs-etcd-2` were Running. The etcd cluster therefore had quorum but no additional member-failure tolerance. Avoid stopping or restarting nodes until this is safely resolved.
+
+### Verification boundary
+
+The Kubernetes-level migration and VM Running/Ready state were verified. A guest OS login and guest-level disk/data-integrity check were not completed, so these are not claimed as verified.
+
+See `evidence/day26-28/final-verification-2026-11-09.md` for the recorded checks and detailed status.
