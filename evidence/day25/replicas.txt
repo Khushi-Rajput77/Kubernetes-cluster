@@ -1,0 +1,11 @@
+volume f1d11412-b691-451f-b68f-5c468a035bbd | replicas wanted: 3 | status: Online
+   replica fd9b2486 | node: ip-172-31-14-250 | pool: pool-node-1 | state: Online
+   replica e3805f46 | node: ip-172-31-1-126 | pool: pool-node-2 | state: Online
+   replica edebae4a | node: ip-172-31-14-149 | pool: pool-node-3 | state: Online
+   target node: ip-172-31-14-149
+NAME          NODE               STATE     STATUS   ERROR   ALERTS    ENCRYPTED   CAPACITY   USED      AVAILABLE   DISK-CAPACITY   MAX-EXPANDABLE-SIZE
+pool-node-1   ip-172-31-14-250   Created   Online           Healthy   false       20 GiB     100 MiB   19.9 GiB    20 GiB          127.8 GiB
+pool-node-2   ip-172-31-1-126    Created   Online           Healthy   false       20 GiB     100 MiB   19.9 GiB    20 GiB          127.8 GiB
+pool-node-3   ip-172-31-14-149   Created   Online           Healthy   false       20 GiB     100 MiB   19.9 GiB    20 GiB          127.8 GiB
+NAME     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pa-vol   Bound    pvc-f1d11412-b691-451f-b68f-5c468a035bbd   2Gi        RWO            mayastor-3     <unset>                 4m20s
